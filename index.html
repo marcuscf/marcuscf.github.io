@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <style>
 body { background-color: black; color: white; text-align: center; font-size: 19pt; }
-h1 { font-size: 60pt; }
+h1 { font-size: 80pt; }
 </style>
 <script>function enableFullScreen() {
   document.
@@ -20,22 +20,23 @@ function wakeLock() {
     statusElem.textContent += 'Wake lock is not supported by this browser.';
   }
 
-navigator.permissions.query("screen-wake-lock").then((perm) => {
-statusElem.textContent += perm.status;
-});
+  //navigator.permissions.query("screen-wake-lock").then((perm) => {
+  //  statusElem.textContent = perm.status;
+  //});
 
   let wakeLock = null;
     /*wakeLock = await*/
     wakeLock = navigator.wakeLock.request('screen');
     wakeLock.then(() => {
-  statusElem.textContent += 'Wake Lock is active! ' + wakeLock; }).catch((err) => {
-    statusElem.textContent += `${err.name}, ${err.message}`;
+      //statusElem.textContent = 'Wake Lock is active! ' + wakeLock;
+    }).catch((err) => {
+      statusElem.textContent = `${err.name}, ${err.message}`;
   });
 
   wakeLock.addEventListener('release', () => {
-  // the wake lock has been released
-  statusElem.textContent = 'Wake Lock has been released';
-});
+    // the wake lock has been released
+    statusElem.textContent = 'Wake Lock has been released';
+  });
 }
 </script></head><body>
 <h1 id="hora">Olá</h1>
