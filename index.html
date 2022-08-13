@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<style>
+body { background-color: black; color: white; text-align: center; font-size: 19pt; }
+h1 { font-size: 60pt; }
+</style>
+<script>function enableFullScreen() {
+  document.
+      documentElement.requestFullscreen();
+  wakeLock();
+}
+
+function wakeLock() {
+  let statusElem = document.getElementById("status");
+
+  if ('wakeLock' in navigator) {
+    //statusElem.textContent += 'Screen Wake Lock API supported!';
+  } else {
+    statusElem.textContent += 'Wake lock is not supported by this browser.';
+  }
+
+navigator.permissions.query("screen-wake-lock").then((perm) => {
+statusElem.textContent += perm.status;
+});
+
+  let wakeLock = null;
+    /*wakeLock = await*/
+    wakeLock = navigator.wakeLock.request('screen');
+    wakeLock.then(() => {
+  statusElem.textContent += 'Wake Lock is active! ' + wakeLock; }).catch((err) => {
+    statusElem.textContent += `${err.name}, ${err.message}`;
+  });
+
+  wakeLock.addEventListener('release', () => {
+  // the wake lock has been released
+  statusElem.textContent = 'Wake Lock has been released';
+});
+}
+</script></head><body>
+<h1 id="hora">Olá</h1>
+<h2 id="data"></h2>
+<button onclick="enableFullScreen();">Tela cheia</button><br>
+<small id="status"></small>
+<script>
+setInterval(() => {
+  let dt = new Date();
+  let el = document.getElementById('hora');
+  let h = dt.getHours();
+  let mi = dt.getMinutes();
+  if(h < 10) h = "0" + h; else h = "" + h;
+  if(mi < 10) mi = "0" + mi; else mi = "" + mi;
+  el.textContent = h + ':' + mi;
+}, 1000);
+</script></body></html>
