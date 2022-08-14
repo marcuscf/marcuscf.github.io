@@ -116,7 +116,7 @@ h1 { font-size: 88pt; }
     if(climaTempoToken != null && climaTempoToken.length > 20) {
       fetch("https://apiadvisor.climatempo.com.br/api/v1/weather/locale/" + PORTO_ALEGRE + "/current?token=" + climaTempoToken)
         .then((response) => {
-          response.body.json().then((json) => {
+          response.json().then((json) => {
             document.getElementById("prevtempo").textContent = iconToText(json.data.icon) + '. ' + json.data.condition + '. ' +
               json.data.temperature + '°C' + ' (sensação ' + json.data.sensation + '°C)';
           });
