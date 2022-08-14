@@ -2,8 +2,21 @@
 <html><head>
 <meta charset="utf-8">
 <style>
-body { background-color: black; color: white; text-align: center; font-size: 19pt; }
-h1 { font-size: 88pt; }
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+h1 {
+  font-size: 110pt;
+  margin: 15px 0px 10px 0px;
+}
+h2 {
+  margin: 10px 0px;
+}
+h3 {
+  margin: 8px 0px;
+}
 </style>
 <script>
   function enableFullScreen() {
@@ -36,7 +49,9 @@ h1 { font-size: 88pt; }
 <body>
   <h1 id="hora">Olá</h1>
   <h2 id="data"></h2>
-  <h3 id="prevtempo"></h3>
+  <br>
+  <h3 id="prevtempo1"></h3>
+  <h3 id="prevtempo2"></h3>
   <button onclick="enableFullScreen();">Tela cheia</button><br>
   <small id="status"></small>
 <script>
@@ -78,7 +93,7 @@ h1 { font-size: 88pt; }
   }, 1000);
   
   const PORTO_ALEGRE = "5346";
-  function iconToText(iconId) {
+  function iconToText(iconId) { // TODO: colocar os ícones também.
     switch(iconId) {
       case '1'  : return 'Sol';
       case '1n' : return 'Noite sem nuvens';
@@ -117,8 +132,8 @@ h1 { font-size: 88pt; }
       fetch("https://apiadvisor.climatempo.com.br/api/v1/weather/locale/" + PORTO_ALEGRE + "/current?token=" + climaTempoToken)
         .then((response) => {
           response.json().then((json) => {
-            document.getElementById("prevtempo").textContent = iconToText(json.data.icon) + '. ' + json.data.condition + '. ' +
-              json.data.temperature + '°C' + ' (sensação ' + json.data.sensation + '°C)';
+            document.getElementById("prevtempo1").textContent = json.data.temperature + '°C' /*+ ' (sensação ' + json.data.sensation + '°C)'*/;
+            document.getElementById("prevtempo2").textContent = iconToText(json.data.icon) + '. ' + json.data.condition + '. ';
           });
         });
     }
