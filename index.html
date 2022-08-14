@@ -116,7 +116,7 @@ h1 { font-size: 88pt; }
           response.body.json().then((json) => {
             document.getElementById("prevtempo").textContent = iconToText(json.data.icon) + '. ' + json.data.condition + '. ' +
               json.data.temperature + '°C' + ' (sensação ' + json.data.sensation + '°C)';
-          }
+          });
         });
     }
   }
