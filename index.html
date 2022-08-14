@@ -68,12 +68,10 @@ h1 { font-size: 88pt; }
   let lastMi = mi;
   
   let atualizaACadaSegundo = setInterval(() => {
-    console.log('s');
     let [h, mi, d, me, a] = atualizaDataHora();
     if(lastMi != mi) {
       clearInterval(atualizaACadaSegundo);
       let atualizaACadaMinuto = setInterval(() => {
-        console.log('mi');
         let [h, mi, d, me, a] = atualizaDataHora();
       }, 60000);
     }
@@ -108,7 +106,12 @@ h1 { font-size: 88pt; }
     }
   }
   
-  let climaTempoToken = location.href.replace(/^.*cttoken=(.*)$/, '$1');
+  let climaTempoToken;
+  if(location.href.indexOf('cttoken') < 0) {
+    climaTempoToken = null;
+  } else {
+    climaTempoToken = location.href.replace(/^.*cttoken=(.*)$/, '$1');
+  }
   function atualizarPrevTempo() {
     if(climaTempoToken != null && climaTempoToken.length > 20) {
       fetch("https://apiadvisor.climatempo.com.br/api/v1/weather/locale/" + PORTO_ALEGRE + "/current?token=" + climaTempoToken)
