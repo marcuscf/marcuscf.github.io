@@ -23,6 +23,12 @@ h4 {
   font-size: 12pt;
   margin: 8px 0px;
 }
+#bateria {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  font-size: 12pt;
+}
 </style>
 <script>
   function enableFullScreen() {
@@ -57,6 +63,7 @@ h4 {
   <h2 id="data"></h2>
   <h3 id="prevtempo1"></h3>
   <h4 id="prevtempo2"></h4>
+  <div id="bateria"></div>
   <button onclick="enableFullScreen();">Tela cheia</button><br>
   <small id="status"></small>
 <script>
@@ -64,39 +71,35 @@ h4 {
     let dt = new Date();
     let h = dt.getHours();
     let mi = dt.getMinutes();
+    let s = dt.getSeconds();
     h = (h < 10 ? "0" : "") + h;
     mi = (mi < 10 ? "0" : "") + mi;
+    s = (s < 10 ? "0" : "") + s;
     let d = dt.getDate();
     let me = dt.getMonth() + 1;
     let a = dt.getFullYear();
     d = (d < 10 ? "0" : "") + d;
     me = (me < 10 ? "0" : "") + me;
-    return [h, mi, d, me, a];
+    return [h, mi, s, d, me, a];
   }
   
   let hora = document.getElementById('hora');
   let data = document.getElementById('data');
   
   function atualizaDataHora() {
-    let [h, mi, d, me, a] = agora();
+    let [h, mi, s, d, me, a] = agora();
     hora.textContent = h + ':' + mi;
     data.textContent = d + '/' + me + '/' + a;
-    return [h, mi, d, me, a];
+    return [h, mi, s, d, me, a];
   }
   
-  let [h, mi, d, me, a] = atualizaDataHora();
-  let lastMi = mi;
-  
-  let atualizaACadaSegundo = setInterval(() => {
-    let [h, mi, d, me, a] = atualizaDataHora();
-    if(lastMi != mi) {
-      clearInterval(atualizaACadaSegundo);
-      let atualizaACadaMinuto = setInterval(() => {
-        let [h, mi, d, me, a] = atualizaDataHora();
-      }, 60000);
-    }
-  }, 1000);
-  
+  let [h, mi, s, d, me, a] = atualizaDataHora();
+  let restoMinuto = 60 - s;
+  setTimeout(() => {
+    atualizaDataHora();
+    setInterval(atualizaDataHora, 60000);
+  }, restoMinuto * 1000);
+
   const PORTO_ALEGRE = "5346";
   function iconToText(iconId) { // TODO: colocar os ícones também.
     switch(iconId) {
@@ -132,6 +135,7 @@ h4 {
   } else {
     climaTempoToken = location.href.replace(/^.*cttoken=(.*)$/, '$1');
   }
+
   function atualizarPrevTempo() {
     if(climaTempoToken != null && climaTempoToken.length > 20) {
       fetch("https://apiadvisor.climatempo.com.br/api/v1/weather/locale/" + PORTO_ALEGRE + "/current?token=" + climaTempoToken)
@@ -144,6 +148,30 @@ h4 {
     }
   }
   
-  atualizarPrevTempo();
-  setInterval(atualizarPrevTempo, 3600000);
+  if(climaTempoToken != null) {
+    atualizarPrevTempo();
+    setInterval(atualizarPrevTempo, 3600000);
+  }
+
+  let bateria = document.getElementById('bateria');
+  navigator.getBattery().then((battery) => {
+    //function updateChargeInfo(){
+    //  console.log(`Battery charging? ${battery.charging ? "Yes" : "No"}`);
+    //}
+
+    //updateChargeInfo();
+    //battery.addEventListener('chargingchange', () => {
+    //  updateChargeInfo();
+    //});  
+
+    function updateLevelInfo(){
+      bateria.textContent = Math.round(battery.level * 100) + '%';
+    }
+
+    updateLevelInfo();
+    battery.addEventListener('levelchange', () => {
+      updateLevelInfo();
+    });
+
+  });
 </script></body></html>
