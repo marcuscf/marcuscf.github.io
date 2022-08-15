@@ -153,25 +153,26 @@ h4 {
     setInterval(atualizarPrevTempo, 3600000);
   }
 
-  let bateria = document.getElementById('bateria');
-  navigator.getBattery().then((battery) => {
-    //function updateChargeInfo(){
-    //  console.log(`Battery charging? ${battery.charging ? "Yes" : "No"}`);
-    //}
+  if(navigator.getBattery) {
+    let bateria = document.getElementById('bateria');
+    navigator.getBattery().then((battery) => {
+      //function updateChargeInfo(){
+      //  console.log(`Battery charging? ${battery.charging ? "Yes" : "No"}`);
+      //}
 
-    //updateChargeInfo();
-    //battery.addEventListener('chargingchange', () => {
-    //  updateChargeInfo();
-    //});  
+      //updateChargeInfo();
+      //battery.addEventListener('chargingchange', () => {
+        //  updateChargeInfo();
+        //});  
+        
+        function updateLevelInfo(){
+        bateria.textContent = Math.round(battery.level * 100) + '%';
+      }
 
-    function updateLevelInfo(){
-      bateria.textContent = Math.round(battery.level * 100) + '%';
-    }
-
-    updateLevelInfo();
-    battery.addEventListener('levelchange', () => {
       updateLevelInfo();
+      battery.addEventListener('levelchange', () => {
+        updateLevelInfo();
+      });
     });
-
-  });
+  }
 </script></body></html>
