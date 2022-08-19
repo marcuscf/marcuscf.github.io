@@ -2,33 +2,39 @@
 <html><head>
 <meta charset="utf-8">
 <style>
-body {
-  background-color: black;
-  color: white;
-  text-align: center;
-}
-h1 {
-  font-size: 110pt;
-  margin: 15px 0px 10px 0px;
-}
-h2 {
-  font-size: 20pt;
-  margin: 10px 0px;
-}
-h3 {
-  font-size: 18pt;
-  margin: 8px 0px;
-}
-h4 {
-  font-size: 12pt;
-  margin: 8px 0px;
-}
-#bateria {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  font-size: 12pt;
-}
+  body {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 920%;
+    margin: 15px 0px 10px 0px;
+  }
+  h2 {
+    font-size: 170%;
+    margin: 10px 0px;
+  }
+  h3 {
+    font-size: 150%;
+    margin: 8px 0px;
+  }
+  h4 {
+    font-size: 100%;
+    margin: 8px 0px;
+  }
+  #bateria {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    font-size: 100%;
+  }
+  nav {
+    text-align: left;
+    position: fixed;
+    font-family: monospace;
+  }
 </style>
 <script>
   function enableFullScreen() {
@@ -59,13 +65,29 @@ h4 {
   }
 </script></head>
 <body>
-  <h1 id="hora">Olá</h1>
-  <h2 id="data"></h2>
-  <h3 id="prevtempo1"></h3>
-  <h4 id="prevtempo2"></h4>
-  <div id="bateria"></div>
-  <button onclick="enableFullScreen();">Tela cheia</button><br>
-  <small id="status"></small>
+  <nav>
+    <div id="controle-tamanho">
+      <button id="larger-fonts">&#x1F5DA;+</button>
+      <br>
+      <button id="smaller-fonts">&#x1F5DB;-</button>
+    </div>
+    <div id="controle-brilho">
+      <button id="increase-brightness" style="font-size: smaller">&#x1f05;+</button>
+      <br>
+      <button id="decrease-brightness" style="font-size: larger">&#x1f06;-</button>
+    </div>
+  </nav>
+  <section>
+    <h1 id="hora">Olá</h1>
+    <h2 id="data"></h2>
+    <h3 id="prevtempo1"></h3>
+    <h4 id="prevtempo2"></h4>
+  </section>
+  <section>
+    <button id="btnFullScreen" onclick="enableFullScreen();">Tela cheia</button><br>
+    <small id="status"></small>
+  </section>
+  <aside id="bateria"></aside>
 <script>
   function agora() {
     let dt = new Date();
@@ -83,13 +105,15 @@ h4 {
     return [h, mi, s, d, me, a];
   }
   
-  let hora = document.getElementById('hora');
-  let data = document.getElementById('data');
+  let elemBody = document.body;
+  
+  let elemHora = document.getElementById('hora');
+  let elemData = document.getElementById('data');
   
   function atualizaDataHora() {
     let [h, mi, s, d, me, a] = agora();
-    hora.textContent = h + ':' + mi;
-    data.textContent = d + '/' + me + '/' + a;
+    elemHora.textContent = h + ':' + mi;
+    elemData.textContent = d + '/' + me + '/' + a;
     return [h, mi, s, d, me, a];
   }
   
@@ -153,8 +177,10 @@ h4 {
     setInterval(atualizarPrevTempo, 3600000);
   }
 
+  const UNICODE_BATTERY = '\u{1F50B}';
+
   if(navigator.getBattery) {
-    let bateria = document.getElementById('bateria');
+    let elemBateria = document.getElementById('bateria');
     navigator.getBattery().then((battery) => {
       //function updateChargeInfo(){
       //  console.log(`Battery charging? ${battery.charging ? "Yes" : "No"}`);
@@ -166,7 +192,7 @@ h4 {
         //});  
         
         function updateLevelInfo(){
-        bateria.textContent = Math.round(battery.level * 100) + '%';
+        elemBateria.textContent = UNICODE_BATTERY + Math.round(battery.level * 100) + '%';
       }
 
       updateLevelInfo();
@@ -175,4 +201,39 @@ h4 {
       });
     });
   }
+
+  const brightnessColors = ['#404040', '#808080', '#b0b0b0', '#ffffff'];
+  let currentBrightness = brightnessColors.length - 1;
+  
+
+  function updateBrightness() {
+    elemBody.style.color = brightnessColors[currentBrightness];
+  }
+
+  function increaseBrightness() {
+    currentBrightness = (currentBrightness + 1) % brightnessColors.length;
+    updateBrightness();
+  }
+  
+  function decreaseBrightness() {
+    currentBrightness = currentBrightness - 1;
+    if(currentBrightness < 0) {
+      currentBrightness = brightnessColors.length - 1;
+    }
+    updateBrightness();
+  }
+
+  document.getElementById('increase-brightness').onclick = increaseBrightness;
+  document.getElementById('decrease-brightness').onclick = decreaseBrightness;
+
+  function largerFonts() {
+    elemBody.style.fontSize = (+elemBody.style.fontSize + 1) + 'px';
+  }
+  
+  function smallerFonts() {
+    elemBody.style.fontSize = (+elemBody.style.fontSize - 1) + 'px';
+  }
+
+  document.getElementById('larger-fonts').onclick = largerFonts();
+  document.getElementById('smaller-fonts').onclick = smallerFonts();
 </script></body></html>
