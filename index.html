@@ -68,7 +68,7 @@
 <body>
   <nav id="config-panel">
     <div id="controle-rotacao">
-      <span id="rotate"> &#x1F504;</span>
+      <span id="rotate">&nbsp;&#x1F504;</span>
     </div>
     <br><br>
     <div id="controle-tamanho">
@@ -258,7 +258,7 @@
     if(currentRotation >= 360) {
       currentRotation = 0;
     }
-    const cssRotation = 'rotate(' + currentRotation + ')';
+    const cssRotation = 'rotate(' + currentRotation + 'deg)';
     document.getElementById('main-section').style.transform = cssRotation;
     document.getElementById('bateria').style.transform = cssRotation;
     document.getElementById('config-panel').style.transform = cssRotation;
