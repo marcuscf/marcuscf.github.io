@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   body {
     background-color: black;
@@ -36,6 +37,7 @@
     font-family: monospace;
     font-size: larger;
     z-index: 1;
+    cursor: pointer;
   }
 </style>
 <script>
@@ -232,7 +234,7 @@
   document.getElementById('increase-brightness').onclick = increaseBrightness;
   document.getElementById('decrease-brightness').onclick = decreaseBrightness;
 
-  const fontSizes = ['11px', '12px', '13px', '14px', '15px', '16px', '17px', '18px', '19px'];
+  const fontSizes = ['11px', '12px', '13px', '14px', '15px', '16px', '17px', '18px', '19px', '20px', '21px', '22px'];
   let currentFontSize = 5;
 
   function largerFonts() {
@@ -260,8 +262,17 @@
       currentRotation = 0;
     }
     const cssRotation = 'rotate(' + currentRotation + 'deg)';
-    document.getElementById('main-section').style.transform = cssRotation;
+    let elemMainSection = document.getElementById('main-section');
+    elemMainSection.style.transform = cssRotation;
     document.getElementById('bateria').style.transform = cssRotation;
+
+    if(currentRotation == 90) {
+      elemMainSection.style.paddingLeft = '90px';
+      elemMainSection.style.paddingRight = '0';
+    } else if(currentRotation == 270) {
+      elemMainSection.style.paddingLeft = '0';
+      elemMainSection.style.paddingRight = '90px';
+    }
   }
 
   document.getElementById('rotate').onclick = rotate;
