@@ -75,7 +75,7 @@
     <div id="controle-brilho">
       <span id="increase-brightness" style="font-size: smaller">&#x1f506;+</span>
       <br>
-      <span id="decrease-brightness" style="font-size: larger">&#x1f05;-</span>
+      <span id="decrease-brightness" style="font-size: larger">&#x1f505;-</span>
     </div>
   </nav>
   <section>
@@ -212,27 +212,37 @@
   }
 
   function increaseBrightness() {
-    currentBrightness = (currentBrightness + 1) % brightnessColors.length;
-    updateBrightness();
+    if(currentBrightness < brightnessColors.length - 1) {
+      ++currentBrightness;
+      updateBrightness();
+    }
   }
   
   function decreaseBrightness() {
-    currentBrightness = currentBrightness - 1;
-    if(currentBrightness < 0) {
-      currentBrightness = brightnessColors.length - 1;
+    if(currentBrightness > 0) {
+      --currentBrightness;
+      updateBrightness();
     }
-    updateBrightness();
   }
 
   document.getElementById('increase-brightness').onclick = increaseBrightness;
   document.getElementById('decrease-brightness').onclick = decreaseBrightness;
 
+  const fontSizes = ['12px', '13px', '14px', '15px', '16px'];
+  let currentFontSize = fontSizes.length - 1;
+
   function largerFonts() {
-    elemBody.style.fontSize = (+elemBody.style.fontSize + 1) + 'px';
+    if(currentFontSize < fontSizes.length - 1) {
+      ++currentFontSize;
+      elemBody.style.fontSize = fontSizes[currentFontSize];
+    }
   }
   
   function smallerFonts() {
-    elemBody.style.fontSize = (+elemBody.style.fontSize - 1) + 'px';
+    if(currentFontSize > 0) {
+      --currentFontSize;
+      elemBody.style.fontSize = fontSizes[currentFontSize];
+    }
   }
 
   document.getElementById('larger-fonts').onclick = largerFonts;
