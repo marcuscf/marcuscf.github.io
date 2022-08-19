@@ -266,12 +266,20 @@
     elemMainSection.style.transform = cssRotation;
     document.getElementById('bateria').style.transform = cssRotation;
 
-    if(currentRotation == 90) {
-      elemMainSection.style.paddingLeft = '90px';
-      elemMainSection.style.paddingRight = '0';
-    } else if(currentRotation == 270) {
-      elemMainSection.style.paddingLeft = '0';
-      elemMainSection.style.paddingRight = '90px';
+    switch(currentRotation) {
+      case 0:
+      case 180:
+        elemMainSection.style.paddingLeft = '0';
+        elemMainSection.style.paddingRight = '0';
+        break;
+      case 90:
+        elemMainSection.style.paddingLeft = '90px';
+        elemMainSection.style.paddingRight = '0';
+        break;
+      case 270:
+        elemMainSection.style.paddingLeft = '0';
+        elemMainSection.style.paddingRight = '90px';
+        break;
     }
   }
 
