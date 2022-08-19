@@ -26,14 +26,15 @@
   }
   #bateria {
     position: absolute;
-    left: 16px;
-    bottom: 16px;
+    left: 20px;
+    bottom: 20px;
     font-size: 100%;
   }
   nav {
     text-align: left;
     position: fixed;
     font-family: monospace;
+    font-size: larger;
   }
 </style>
 <script>
@@ -65,26 +66,28 @@
   }
 </script></head>
 <body>
-  <nav>
-    <div id="controle-tamanho">
-      <span id="larger-fonts">+&#x1F5DA;</span>
-      <br>
-      <span id="smaller-fonts">-&#x1F5DB;</span>
+  <nav id="config-panel">
+    <div id="controle-rotacao">
+      <span id="rotate"> &#x1F504;</span>
     </div>
-    <br>
+    <br><br>
+    <div id="controle-tamanho">
+      <span id="larger-fonts">&#x2795;A</span>
+      <br><br>
+      <span id="smaller-fonts">&#x2796;A</span>
+    </div>
+    <br><br>
     <div id="controle-brilho">
-      <span id="increase-brightness">+&#x1f506;</span>
-      <br>
-      <span id="decrease-brightness">-&#x1f505;</span>
+      <span id="increase-brightness">&#x2795;&#x1f506;</span>
+      <br><br>
+      <span id="decrease-brightness">&#x2796;&#x1f505;</span>
     </div>
   </nav>
-  <section>
+  <section id="main-section">
     <h1 id="hora">Olá</h1>
     <h2 id="data"></h2>
     <h3 id="prevtempo1"></h3>
     <h4 id="prevtempo2"></h4>
-  </section>
-  <section>
     <button id="btnFullScreen" onclick="enableFullScreen();">Tela cheia</button><br>
     <small id="status"></small>
   </section>
@@ -247,4 +250,20 @@
 
   document.getElementById('larger-fonts').onclick = largerFonts;
   document.getElementById('smaller-fonts').onclick = smallerFonts;
+
+  let currentRotation = 0;
+
+  function rotate() {
+    currentRotation += 90;
+    if(currentRotation >= 360) {
+      currentRotation = 0;
+    }
+    const cssRotation = 'rotate(' + currentRotation + ')';
+    document.getElementById('main-section').style.transform = cssRotation;
+    document.getElementById('bateria').style.transform = cssRotation;
+    document.getElementById('config-panel').style.transform = cssRotation;
+  }
+
+  document.getElementById('rotate').onclick = rotate;
+
 </script></body></html>
