@@ -67,14 +67,15 @@
 <body>
   <nav>
     <div id="controle-tamanho">
-      <button id="larger-fonts">&#x1F5DA;+</button>
+      <span id="larger-fonts">&#x1F5DA;+</span>
       <br>
-      <button id="smaller-fonts">&#x1F5DB;-</button>
+      <span id="smaller-fonts">&#x1F5DB;-</span>
     </div>
+    <br>
     <div id="controle-brilho">
-      <button id="increase-brightness" style="font-size: smaller">&#x1f05;+</button>
+      <span id="increase-brightness" style="font-size: smaller">&#x1f506;+</span>
       <br>
-      <button id="decrease-brightness" style="font-size: larger">&#x1f06;-</button>
+      <span id="decrease-brightness" style="font-size: larger">&#x1f05;-</span>
     </div>
   </nav>
   <section>
@@ -234,6 +235,6 @@
     elemBody.style.fontSize = (+elemBody.style.fontSize - 1) + 'px';
   }
 
-  document.getElementById('larger-fonts').onclick = largerFonts();
-  document.getElementById('smaller-fonts').onclick = smallerFonts();
+  document.getElementById('larger-fonts').onclick = largerFonts;
+  document.getElementById('smaller-fonts').onclick = smallerFonts;
 </script></body></html>
