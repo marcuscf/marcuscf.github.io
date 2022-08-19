@@ -84,7 +84,6 @@
       <span id="decrease-brightness">&#x2796;&#x1f505;</span>
     </div>
   </nav>
-  <br>
   <section id="main-section">
     <h1 id="hora">Olá</h1>
     <h2 id="data"></h2>
@@ -233,8 +232,8 @@
   document.getElementById('increase-brightness').onclick = increaseBrightness;
   document.getElementById('decrease-brightness').onclick = decreaseBrightness;
 
-  const fontSizes = ['12px', '13px', '14px', '15px', '16px'];
-  let currentFontSize = fontSizes.length - 1;
+  const fontSizes = ['11px', '12px', '13px', '14px', '15px', '16px', '17px', '18px', '19px'];
+  let currentFontSize = 5;
 
   function largerFonts() {
     if(currentFontSize < fontSizes.length - 1) {
