@@ -35,9 +35,30 @@
     text-align: left;
     position: fixed;
     font-family: monospace;
-    font-size: larger;
+    font-size: 18px;
     z-index: 1;
+  }
+  .btn {
+    background-color: black;
+    color: inherit;
+    font-size: 18px;
+  }
+  .sem-borda {
     cursor: pointer;
+    border-style: none;
+  }
+  @media screen and (max-width: 400px) {
+    h1 {
+      font-size: 580%;
+    }
+    .btn {
+      font-size: 16px;
+    }
+  }
+  #main-section {
+    position: relative;
+    top: 0;
+    left: 0;
   }
 </style>
 <script>
@@ -71,19 +92,19 @@
 <body>
   <nav id="config-panel">
     <div id="controle-rotacao">
-      <span id="rotate">&nbsp;&#x1F504;</span>
+      <button id="rotate" class="btn sem-borda">&nbsp;&#x1F504;</button>
     </div>
     <br><br>
     <div id="controle-tamanho">
-      <span id="larger-fonts">&#x2795;A</span>
+      <button id="larger-fonts" class="btn sem-borda">&#x2795;A</button>
       <br><br>
-      <span id="smaller-fonts">&#x2796;A</span>
+      <button id="smaller-fonts" class="btn sem-borda">&#x2796;A</button>
     </div>
     <br><br>
     <div id="controle-brilho">
-      <span id="increase-brightness">&#x2795;&#x1f506;</span>
+      <button id="increase-brightness" class="btn sem-borda">&#x2795;&#x1f506;</button>
       <br><br>
-      <span id="decrease-brightness">&#x2796;&#x1f505;</span>
+      <button id="decrease-brightness" class="btn sem-borda">&#x2796;&#x1f505;</button>
     </div>
   </nav>
   <section id="main-section">
@@ -91,7 +112,7 @@
     <h2 id="data"></h2>
     <h3 id="prevtempo1"></h3>
     <h4 id="prevtempo2"></h4>
-    <button id="btnFullScreen" onclick="enableFullScreen();">Tela cheia</button><br>
+    <button id="btnFullScreen" class="btn" onclick="enableFullScreen();">Tela cheia</button><br>
     <small id="status"></small>
   </section>
   <aside id="bateria"></aside>
@@ -209,7 +230,7 @@
     });
   }
 
-  const brightnessColors = ['#404040', '#808080', '#b0b0b0', '#ffffff'];
+  const brightnessColors = ['#282828', '#404040', '#606060', '#909090', '#c0c0c0', '#ffffff'];
   let currentBrightness = brightnessColors.length - 1;
   
 
@@ -234,8 +255,8 @@
   document.getElementById('increase-brightness').onclick = increaseBrightness;
   document.getElementById('decrease-brightness').onclick = decreaseBrightness;
 
-  const fontSizes = ['11px', '12px', '13px', '14px', '15px', '16px', '17px', '18px', '19px', '20px', '21px', '22px'];
-  let currentFontSize = 5;
+  const fontSizes = ['10px', '11px', '12px', '13px', '14px', '15px', '16px', '17px', '18px', '19px', '20px', '21px', '22px'];
+  let currentFontSize = 6;
 
   function largerFonts() {
     if(currentFontSize < fontSizes.length - 1) {
@@ -269,16 +290,13 @@
     switch(currentRotation) {
       case 0:
       case 180:
-        elemMainSection.style.paddingLeft = '0';
-        elemMainSection.style.paddingRight = '0';
+        elemMainSection.style.top = '0';
+        elemMainSection.style.left = '0';
         break;
       case 90:
-        elemMainSection.style.paddingLeft = '90px';
-        elemMainSection.style.paddingRight = '0';
-        break;
       case 270:
-        elemMainSection.style.paddingLeft = '0';
-        elemMainSection.style.paddingRight = '90px';
+        elemMainSection.style.top = '90px';
+        elemMainSection.style.bottom = '0';
         break;
     }
   }
