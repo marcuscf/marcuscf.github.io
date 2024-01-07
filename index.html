@@ -8,18 +8,25 @@
     color: white;
     text-align: center;
     font-size: 16px;
+    font-family: sans-serif;
+  }
+  #hora {
+    font-family: sans-serif;
+  }
+  #data {
+    font-family: sans-serif;
   }
   h1 {
-    font-size: 920%;
-    margin: 15px 0px 10px 0px;
+    font-size: 1300%;
+    margin: 0;
   }
   h2 {
-    font-size: 170%;
-    margin: 10px 0px;
+    font-size: 155%;
+    margin: 0;
   }
   h3 {
-    font-size: 150%;
-    margin: 8px 0px;
+    font-size: 145%;
+    margin: 0;
   }
   h4 {
     font-size: 100%;
@@ -90,21 +97,23 @@
   }
 </script></head>
 <body>
-  <nav id="config-panel">
+  <nav>
     <div id="controle-rotacao">
       <button id="rotate" class="btn sem-borda">&nbsp;&#x1F504;</button>
     </div>
     <br><br>
-    <div id="controle-tamanho">
-      <button id="larger-fonts" class="btn sem-borda">&#x2795;A</button>
+    <div id="config-panel">
+      <div id="controle-tamanho">
+        <button id="larger-fonts" class="btn sem-borda">&#x2795;A</button>
+        <br><br>
+        <button id="smaller-fonts" class="btn sem-borda">&#x2796;A</button>
+      </div>
       <br><br>
-      <button id="smaller-fonts" class="btn sem-borda">&#x2796;A</button>
-    </div>
-    <br><br>
-    <div id="controle-brilho">
-      <button id="increase-brightness" class="btn sem-borda">&#x2795;&#x1f506;</button>
-      <br><br>
-      <button id="decrease-brightness" class="btn sem-borda">&#x2796;&#x1f505;</button>
+      <div id="controle-brilho">
+        <button id="increase-brightness" class="btn sem-borda">&#x2795;&#x1f506;</button>
+        <br><br>
+        <button id="decrease-brightness" class="btn sem-borda">&#x2796;&#x1f505;</button>
+      </div>
     </div>
   </nav>
   <section id="main-section">
@@ -216,10 +225,10 @@
 
       //updateChargeInfo();
       //battery.addEventListener('chargingchange', () => {
-        //  updateChargeInfo();
-        //});  
-        
-        function updateLevelInfo(){
+      //  updateChargeInfo();
+      //});
+
+      function updateLevelInfo(){
         elemBateria.textContent = UNICODE_BATTERY + Math.round(battery.level * 100) + '%';
       }
 
@@ -283,20 +292,28 @@
       currentRotation = 0;
     }
     const cssRotation = 'rotate(' + currentRotation + 'deg)';
+    let elemConfigPanel = document.getElementById('config-panel');
     let elemMainSection = document.getElementById('main-section');
-    elemMainSection.style.transform = cssRotation;
-    document.getElementById('bateria').style.transform = cssRotation;
+    let elemBateria = document.getElementById('bateria');
+
+    elemBateria.style.transform = cssRotation;
 
     switch(currentRotation) {
       case 0:
       case 180:
-        elemMainSection.style.top = '0';
-        elemMainSection.style.left = '0';
+        elemMainSection.style.transform = cssRotation;
+        elemConfigPanel.style.transform = cssRotation;
+        elemConfigPanel.style.transformOrigin = 'center';
         break;
       case 90:
+        elemMainSection.style.transform = cssRotation + ' translateX(140px)';
+        elemConfigPanel.style.transform = cssRotation + ' translateY(-120%)';
+        elemConfigPanel.style.transformOrigin = 'top left';
+        break;
       case 270:
-        elemMainSection.style.top = '90px';
-        elemMainSection.style.bottom = '0';
+        elemMainSection.style.transform = cssRotation + ' translateX(-140px)';
+        elemConfigPanel.style.transform = cssRotation + ' translateX(-100%)';
+        elemConfigPanel.style.transformOrigin = 'top left';
         break;
     }
   }
